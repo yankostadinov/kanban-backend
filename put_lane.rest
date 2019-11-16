@@ -1,0 +1,17 @@
+PUT http://localhost:3001/lanes/1
+Content-Type: application/json
+
+{
+	"title": "",
+	"order": 1
+}
+
+###
+
+PUT http://localhost:3001/lanes/2
+Content-Type: application/json
+
+{
+	"title": "In Progress",
+	"order": 2
+}

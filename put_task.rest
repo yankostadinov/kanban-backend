@@ -1,0 +1,7 @@
+PUT http://localhost:3001/tasks/1
+Content-Type: application/json
+
+{
+	"subject": "Untitled",
+	"assignee": "Unassigned"
+}
