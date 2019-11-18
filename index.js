@@ -40,7 +40,7 @@ app.post('/lanes', (req, res) => {
 	database.lanes = database.lanes.concat(lane);
 
 	console.log(`post lane ${lane.id}`);
-	res.json(database.lanes);
+	res.json(lane);
 });
 
 app.put('/lanes/:id', (req, res) => {
@@ -51,7 +51,7 @@ app.put('/lanes/:id', (req, res) => {
 	if (req.body.hidden != null) lane.hidden = req.body.hidden;
 
 	console.log(`put lane ${lane.id}`);
-	res.json(database.lanes);
+	res.json(lane);
 });
 
 app.delete('/lanes/:id', (req, res) => {
@@ -91,7 +91,7 @@ app.post('/tasks', (req, res) => {
 	database.tasks = database.tasks.concat(task);
 
 	console.log(`post task ${task.id}`);
-	res.json(database.tasks);
+	res.json(task);
 });
 
 app.put('/tasks/:id', (req, res) => {
@@ -102,7 +102,7 @@ app.put('/tasks/:id', (req, res) => {
 	if (req.body.lane != null) task.lane = req.body.lane;
 
 	console.log(`put task ${task.id}`);
-	res.json(database.tasks);
+	res.json(task);
 });
 
 app.delete('/tasks/:id', (req, res) => {
@@ -111,7 +111,7 @@ app.delete('/tasks/:id', (req, res) => {
 	database.tasks.splice(taskIndex, 1);
 
 	console.log(`delete task ${req.params.id}`);
-	res.json(database.tasks);
+	res.json(task);
 });
 
 const PORT = 3001;
