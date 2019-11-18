@@ -28,7 +28,7 @@ app.get('/lanes/:id', (req, res) => {
 });
 
 app.post('/lanes', (req, res) => {
-	if (!req.body.title) return res.status(400).json({ error: 'title missing' });
+	if (req.body.title == null) return res.status(400).json({ error: 'title missing' });
 
 	const lane = {
 		title: req.body.title,
@@ -46,9 +46,9 @@ app.post('/lanes', (req, res) => {
 app.put('/lanes/:id', (req, res) => {
 	let lane = database.lanes.find(lane => lane.id === parseInt(req.params.id));
 
-	if (req.body.title) lane.title = req.body.title;
-	if (req.body.order) lane.order = req.body.order;
-	if (req.body.hidden) lane.hidden = req.body.hidden;
+	if (req.body.title != null) lane.title = req.body.title;
+	if (req.body.order != null) lane.order = req.body.order;
+	if (req.body.hidden != null) lane.hidden = req.body.hidden;
 
 	console.log(`put lane ${lane.id}`);
 	res.json(database.lanes);
@@ -76,9 +76,9 @@ app.get('/tasks/:id', (req, res) => {
 });
 
 app.post('/tasks', (req, res) => {
-	if (!req.body.subject) return res.status(400).json({ error: 'subject missing' });
-	if (!req.body.assignee) return res.status(400).json({ error: 'assignee missing' });
-	if (!req.body.lane) return res.status(400).json({ error: 'lane missing' });
+	if (req.body.subject == null) return res.status(400).json({ error: 'subject missing' });
+	if (req.body.assignee == null) return res.status(400).json({ error: 'assignee missing' });
+	if (req.body.lane == null) return res.status(400).json({ error: 'lane missing' });
 
 	const task = {
 		subject: req.body.subject,
@@ -97,8 +97,9 @@ app.post('/tasks', (req, res) => {
 app.put('/tasks/:id', (req, res) => {
 	let task = database.tasks.find(task => task.id === parseInt(req.params.id));
 
-	if (req.body.subject) task.subject = req.body.subject;
-	if (req.body.assignee) task.assignee = req.body.assignee;
+	if (req.body.subject != null) task.subject = req.body.subject;
+	if (req.body.assignee != null) task.assignee = req.body.assignee;
+	if (req.body.lane != null) task.lane = req.body.lane;
 
 	console.log(`put task ${task.id}`);
 	res.json(database.tasks);
