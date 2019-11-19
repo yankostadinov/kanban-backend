@@ -4,7 +4,92 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 const app = express();
-const database = JSON.parse(fs.readFileSync('database.json'));
+const database = {
+	"lanes": [
+		{
+			"title": "To Do",
+			"order": 1,
+			"hidden": false,
+			"id": 1
+		},
+		{
+			"title": "In Progress",
+			"order": 2,
+			"hidden": false,
+			"id": 2
+		},
+		{
+			"title": "Done",
+			"order": 3,
+			"hidden": false,
+			"id": 3
+		},
+		{
+			"title": "To Delete",
+			"order": 4,
+			"id": 4,
+			"hidden": true
+		}
+	],
+	"tasks": [
+		{
+			"id": 1,
+			"date": 1572805598639,
+			"subject": "Create basic structure",
+			"lane": 3,
+			"assignee": "Yan Kostadinov"
+		},
+		{
+			"id": 2,
+			"date": 1572805598639,
+			"subject": "Save and restore data",
+			"lane": 3,
+			"assignee": "Yan Kostadinov"
+		},
+		{
+			"id": 3,
+			"date": 1572805598639,
+			"subject": "Add lane drag and drop",
+			"lane": 3,
+			"assignee": "Yan Kostadinov"
+		},
+		{
+			"id": 4,
+			"date": 1572805598639,
+			"subject": "Add task drag and drop",
+			"lane": 3,
+			"assignee": "Yan Kostadinov"
+		},
+		{
+			"id": 5,
+			"date": 1572805598639,
+			"subject": "Edit/remove lane",
+			"lane": 3,
+			"assignee": "Yan Kostadinov"
+		},
+		{
+			"id": 6,
+			"date": 1572805598639,
+			"subject": "Add new task button",
+			"lane": 3,
+			"assignee": "Yan Kostadinov"
+		},
+		{
+			"id": 7,
+			"date": 1572805598639,
+			"subject": "Add new task modal",
+			"lane": 3,
+			"assignee": "Yan Kostadinov"
+		},
+		{
+			"id": 8,
+			"date": 1572805598639,
+			"subject": "Edit/remove task",
+			"lane": 4,
+			"assignee": "Yan Kostadinov"
+		}
+	]
+}
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -70,7 +155,7 @@ app.get('/tasks', (req, res) => {
 
 app.get('/tasks/:id', (req, res) => {
 	const id = req.params.id;
-	
+
 	console.log(`get task ${id}`);
 	res.json(database.tasks.find(lane => lane.id === id));
 });
@@ -114,7 +199,7 @@ app.delete('/tasks/:id', (req, res) => {
 	res.json(task);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)
 });
@@ -122,4 +207,4 @@ app.listen(PORT, () => {
 const generateId = (collection) => {
 	const highestId = Math.max(...collection.map(element => element.id));
 	return highestId + 1;
-}
+};
