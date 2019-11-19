@@ -95,17 +95,17 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('dist'));
 
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
 	console.log(`get all`);
 	res.json(database);
 });
 
-app.get('/lanes', (req, res) => {
+app.get('/api/lanes', (req, res) => {
 	console.log(`get all lanes`);
 	res.json(database.lanes);
 });
 
-app.get('/lanes/:id', (req, res) => {
+app.get('/api/lanes/:id', (req, res) => {
 	const id = req.params.id;
 	const lane = database.lanes.find(lane => lane.id === parseInt(id));
 
@@ -113,7 +113,7 @@ app.get('/lanes/:id', (req, res) => {
 	res.json(lane);
 });
 
-app.post('/lanes', (req, res) => {
+app.post('/api/lanes', (req, res) => {
 	if (req.body.title == null) return res.status(400).json({ error: 'title missing' });
 
 	const lane = {
@@ -129,7 +129,7 @@ app.post('/lanes', (req, res) => {
 	res.json(lane);
 });
 
-app.put('/lanes/:id', (req, res) => {
+app.put('/api/lanes/:id', (req, res) => {
 	let lane = database.lanes.find(lane => lane.id === parseInt(req.params.id));
 
 	if (req.body.title != null) lane.title = req.body.title;
@@ -140,7 +140,7 @@ app.put('/lanes/:id', (req, res) => {
 	res.json(lane);
 });
 
-app.delete('/lanes/:id', (req, res) => {
+app.delete('/api/lanes/:id', (req, res) => {
 	const laneIndex = database.lanes.findIndex(lane => lane.id === parseInt(req.params.id));
 
 	database.lanes.splice(laneIndex, 1);
@@ -149,19 +149,19 @@ app.delete('/lanes/:id', (req, res) => {
 	res.json(database.lanes);
 });
 
-app.get('/tasks', (req, res) => {
+app.get('/api/tasks', (req, res) => {
 	console.log(`get all tasks`);
 	res.json(database.tasks);
 });
 
-app.get('/tasks/:id', (req, res) => {
+app.get('/api/tasks/:id', (req, res) => {
 	const id = req.params.id;
 
 	console.log(`get task ${id}`);
 	res.json(database.tasks.find(lane => lane.id === id));
 });
 
-app.post('/tasks', (req, res) => {
+app.post('/api/tasks', (req, res) => {
 	if (req.body.subject == null) return res.status(400).json({ error: 'subject missing' });
 	if (req.body.assignee == null) return res.status(400).json({ error: 'assignee missing' });
 	if (req.body.lane == null) return res.status(400).json({ error: 'lane missing' });
@@ -180,7 +180,7 @@ app.post('/tasks', (req, res) => {
 	res.json(task);
 });
 
-app.put('/tasks/:id', (req, res) => {
+app.put('/api/tasks/:id', (req, res) => {
 	let task = database.tasks.find(task => task.id === parseInt(req.params.id));
 
 	if (req.body.subject != null) task.subject = req.body.subject;
@@ -191,7 +191,7 @@ app.put('/tasks/:id', (req, res) => {
 	res.json(task);
 });
 
-app.delete('/tasks/:id', (req, res) => {
+app.delete('/api/tasks/:id', (req, res) => {
 	const taskIndex = database.tasks.findIndex(task => task.id === parseInt(req.params.id));
 
 	database.tasks.splice(taskIndex, 1);
