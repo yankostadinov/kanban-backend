@@ -93,6 +93,7 @@ const database = {
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
 	console.log(`get all`);

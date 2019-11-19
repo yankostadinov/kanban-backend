@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "build": "rm -rf dist && cd ../kanban/ && yarn prod && cp -r dist ../kanban-backend",
+    "deploy": "git push heroku master",
+    "deploy:full": "yarn build && git add . && git commit -m build-deploy && yarn deploy"
   },
   "author": "Yan Kostadinov <yankostadinov@gmail.com>",
   "license": "MIT",
