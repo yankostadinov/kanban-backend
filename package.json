@@ -5,7 +5,8 @@
   "scripts": {
     "build:ui": "rm -rf dist && cd ../kanban/ && yarn prod && cp -r dist ../kanban-backend",
     "deploy": "git push heroku master",
-    "deploy:full": "yarn build:ui && git add . && git commit -m build-deploy && yarn deploy"
+    "deploy:full": "yarn build:ui && git add . && git commit -m build-deploy && yarn deploy",
+    "start": "node index.js"
   },
   "author": "Yan Kostadinov <yankostadinov@gmail.com>",
   "license": "MIT",
