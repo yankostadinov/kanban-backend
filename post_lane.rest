@@ -1,6 +1,0 @@
-POST http://localhost:3001/lanes
-Content-Type: application/json
-
-{
-	"title": "Untitled"
-}
