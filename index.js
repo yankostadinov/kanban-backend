@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+const { Task, Lane } = require('./models/');
 const app = express();
 
 app.use(cors());
@@ -13,9 +15,10 @@ app.get('/api/', (req, res) => {
 	res.json(database);
 });
 
-app.get('/api/lanes', (req, res) => {
+app.get('/api/lanes', async (req, res) => {
 	console.log(`get all lanes`);
-	res.json(database.lanes);
+	const lanes = await Lane.find({});
+	res.json(lanes);
 });
 
 app.get('/api/lanes/:id', (req, res) => {
@@ -26,20 +29,18 @@ app.get('/api/lanes/:id', (req, res) => {
 	res.json(lane);
 });
 
-app.post('/api/lanes', (req, res) => {
+app.post('/api/lanes', async (req, res) => {
 	if (req.body.title == null) return res.status(400).json({ error: 'title missing' });
 
-	const lane = {
+	const lane = new Lane({
 		title: req.body.title,
 		hidden: false,
-		order: generateId(database.lanes),
-		id: generateId(database.lanes),
-	};
-
-	database.lanes = database.lanes.concat(lane);
+	});
 
 	console.log(`post lane ${lane.id}`);
-	res.json(lane);
+
+	const laneResponse = await lane.save();
+	res.json(laneResponse);
 });
 
 app.put('/api/lanes/:id', (req, res) => {
@@ -62,9 +63,10 @@ app.delete('/api/lanes/:id', (req, res) => {
 	res.json(database.lanes);
 });
 
-app.get('/api/tasks', (req, res) => {
+app.get('/api/tasks', async (req, res) => {
 	console.log(`get all tasks`);
-	res.json(database.tasks);
+	const tasks = await Task.find({});
+	res.json(tasks);
 });
 
 app.get('/api/tasks/:id', (req, res) => {
@@ -74,23 +76,22 @@ app.get('/api/tasks/:id', (req, res) => {
 	res.json(database.tasks.find(lane => lane.id === id));
 });
 
-app.post('/api/tasks', (req, res) => {
+app.post('/api/tasks', async (req, res) => {
 	if (req.body.subject == null) return res.status(400).json({ error: 'subject missing' });
 	if (req.body.assignee == null) return res.status(400).json({ error: 'assignee missing' });
 	if (req.body.lane == null) return res.status(400).json({ error: 'lane missing' });
 
-	const task = {
+	const task = new Task({
 		subject: req.body.subject,
 		assignee: req.body.assignee,
 		lane: req.body.lane,
 		date: Date.now(),
-		id: generateId(database.tasks),
-	};
-
-	database.tasks = database.tasks.concat(task);
+	});
 
 	console.log(`post task ${task.id}`);
-	res.json(task);
+
+	const taskResponse = await task.save();
+	res.json(taskResponse);
 });
 
 app.put('/api/tasks/:id', (req, res) => {
@@ -113,12 +114,7 @@ app.delete('/api/tasks/:id', (req, res) => {
 	res.json(task);
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)
 });
-
-const generateId = (collection) => {
-	const highestId = Math.max(...collection.map(element => element.id));
-	return highestId + 1;
-};
