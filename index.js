@@ -10,22 +10,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('dist'));
 
-app.get('/api/', (req, res) => {
-	console.log(`get all`);
-	res.json(database);
-});
-
 app.get('/api/lanes', async (req, res) => {
 	console.log(`get all lanes`);
 	const lanes = await Lane.find({});
 	res.json(lanes);
 });
 
-app.get('/api/lanes/:id', (req, res) => {
-	const id = req.params.id;
-	const lane = database.lanes.find(lane => lane.id === parseInt(id));
+app.get('/api/lanes/:id', async (req, res) => {
+	const lane = await Lane.findById(req.params.id);
 
-	console.log(`get lane ${id}`);
+	console.log(`get lane ${lane.id}`);
 	res.json(lane);
 });
 
@@ -69,11 +63,11 @@ app.get('/api/tasks', async (req, res) => {
 	res.json(tasks);
 });
 
-app.get('/api/tasks/:id', (req, res) => {
-	const id = req.params.id;
+app.get('/api/tasks/:id', async (req, res) => {
+	const task = await Task.findById(req.params.id);
 
-	console.log(`get task ${id}`);
-	res.json(database.tasks.find(lane => lane.id === id));
+	console.log(`get task ${task.id}`);
+	res.json(task);
 });
 
 app.post('/api/tasks', async (req, res) => {
