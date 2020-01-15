@@ -17,10 +17,15 @@ app.get('/api/lanes', async (req, res) => {
 });
 
 app.get('/api/lanes/:id', async (req, res) => {
-	const lane = await Lane.findById(req.params.id);
+	try {
+		const lane = await Lane.findById(req.params.id);
 
-	console.log(`get lane ${lane.id}`);
-	res.json(lane);
+		console.log(`get lane ${lane.id}`);
+		res.json(lane);
+	} catch(error) {
+		console.log(error);
+		res.status(404).end();
+	}
 });
 
 app.post('/api/lanes', async (req, res) => {
@@ -64,10 +69,15 @@ app.get('/api/tasks', async (req, res) => {
 });
 
 app.get('/api/tasks/:id', async (req, res) => {
-	const task = await Task.findById(req.params.id);
+	try {
+		const task = await Task.findById(req.params.id);
 
-	console.log(`get task ${task.id}`);
-	res.json(task);
+		console.log(`get task ${task.id}`);
+		res.json(task);
+	} catch(error) {
+		console.log(error);
+		res.status(404).end();
+	}
 });
 
 app.post('/api/tasks', async (req, res) => {
