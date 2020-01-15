@@ -42,15 +42,19 @@ app.post('/api/lanes', async (req, res) => {
 	res.json(laneResponse);
 });
 
-app.put('/api/lanes/:id', (req, res) => {
-	let lane = database.lanes.find(lane => lane.id === parseInt(req.params.id));
+app.put('/api/lanes/:id', async (req, res) => {
+	let lane = {
+		title: req.body.title,
+		hidden: req.body.hidden,
+	};
 
-	if (req.body.title != null) lane.title = req.body.title;
-	if (req.body.order != null) lane.order = req.body.order;
-	if (req.body.hidden != null) lane.hidden = req.body.hidden;
-
-	console.log(`put lane ${lane.id}`);
-	res.json(lane);
+	try {
+		await Lane.findByIdAndUpdate(req.params.id, lane, { new: true, omitUndefined: true });
+		console.log(`put lane ${lane.id}`);
+	} catch(error) {
+		console.log(error);
+		res.status(404).end();
+	}
 });
 
 app.delete('/api/lanes/:id', async (req, res) => {
@@ -99,15 +103,20 @@ app.post('/api/tasks', async (req, res) => {
 	res.json(taskResponse);
 });
 
-app.put('/api/tasks/:id', (req, res) => {
-	let task = database.tasks.find(task => task.id === parseInt(req.params.id));
+app.put('/api/tasks/:id', async (req, res) => {
+	let task = {
+		subject: req.body.subject,
+		assignee: req.body.assignee,
+		lane: req.body.lane,
+	};
 
-	if (req.body.subject != null) task.subject = req.body.subject;
-	if (req.body.assignee != null) task.assignee = req.body.assignee;
-	if (req.body.lane != null) task.lane = req.body.lane;
-
-	console.log(`put task ${task.id}`);
-	res.json(task);
+	try {
+		await Task.findByIdAndUpdate(req.params.id, task, { new: true, omitUndefined: true });
+		console.log(`put task ${task.id}`);
+	} catch(error) {
+		console.log(error);
+		res.status(404).end();
+	}
 });
 
 app.delete('/api/tasks/:id', async (req, res) => {
@@ -116,7 +125,8 @@ app.delete('/api/tasks/:id', async (req, res) => {
 		res.status(204).end();
 	} catch(error) {
 		res.status(404).end();
-	}});
+	}
+});
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
