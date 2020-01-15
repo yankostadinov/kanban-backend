@@ -53,13 +53,14 @@ app.put('/api/lanes/:id', (req, res) => {
 	res.json(lane);
 });
 
-app.delete('/api/lanes/:id', (req, res) => {
-	const laneIndex = database.lanes.findIndex(lane => lane.id === parseInt(req.params.id));
-
-	database.lanes.splice(laneIndex, 1);
-
-	console.log(`delete lane ${req.params.id}`);
-	res.json(database.lanes);
+app.delete('/api/lanes/:id', async (req, res) => {
+	try {
+		await Lane.findByIdAndRemove(req.params.id);
+		res.status(204).end();
+	} catch(error) {
+		console.log(error);
+		res.status(404).end();
+	}
 });
 
 app.get('/api/tasks', async (req, res) => {
@@ -109,14 +110,13 @@ app.put('/api/tasks/:id', (req, res) => {
 	res.json(task);
 });
 
-app.delete('/api/tasks/:id', (req, res) => {
-	const taskIndex = database.tasks.findIndex(task => task.id === parseInt(req.params.id));
-
-	database.tasks.splice(taskIndex, 1);
-
-	console.log(`delete task ${req.params.id}`);
-	res.json(task);
-});
+app.delete('/api/tasks/:id', async (req, res) => {
+	try {
+		await Task.findByIdAndRemove(req.params.id);
+		res.status(204).end();
+	} catch(error) {
+		res.status(404).end();
+	}});
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
