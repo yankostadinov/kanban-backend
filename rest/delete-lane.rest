@@ -1,0 +1,2 @@
+DELETE http://localhost:3001/api/lanes/5e1f51c9576ed20b442adf3f
+Content-Type: application/json

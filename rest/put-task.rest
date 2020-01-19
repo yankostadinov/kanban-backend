@@ -1,0 +1,6 @@
+PUT http://localhost:3001/api/tasks/5e1e0cd168c5a03868c8975d
+Content-Type: application/json
+
+{
+	"lane": "To Delete"
+}
