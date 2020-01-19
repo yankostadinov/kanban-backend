@@ -1,9 +1,17 @@
 const mongoose = require('mongoose');
 
-const Lane = mongoose.model('Lane', new mongoose.Schema({
+const laneSchema = new mongoose.Schema({
 	title: String,
 	order: Number,
 	hidden: Boolean,
-}));
+});
 
-module.exports = Lane;
+laneSchema.set('toJSON', {
+  transform: (_, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+});
+
+module.exports = mongoose.model('Lane', laneSchema);

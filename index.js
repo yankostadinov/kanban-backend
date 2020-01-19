@@ -13,7 +13,7 @@ app.use(express.static('static'));
 app.get('/api/lanes', async (req, res) => {
 	console.log(`get all lanes`);
 	const lanes = await Lane.find({});
-	res.json(lanes);
+	res.json(lanes.map(lane => lane.toJSON()));
 });
 
 app.get('/api/lanes/:id', async (req, res) => {
@@ -21,7 +21,7 @@ app.get('/api/lanes/:id', async (req, res) => {
 		const lane = await Lane.findById(req.params.id);
 
 		console.log(`get lane ${lane.id}`);
-		res.json(lane);
+		res.json(lane.toJSON());
 	} catch(error) {
 		console.log(error);
 		res.status(404).end();
@@ -39,7 +39,7 @@ app.post('/api/lanes', async (req, res) => {
 	console.log(`post lane ${lane.id}`);
 
 	const laneResponse = await lane.save();
-	res.json(laneResponse);
+	res.json(laneResponse.toJSON());
 });
 
 app.put('/api/lanes/:id', async (req, res) => {
@@ -70,7 +70,7 @@ app.delete('/api/lanes/:id', async (req, res) => {
 app.get('/api/tasks', async (req, res) => {
 	console.log(`get all tasks`);
 	const tasks = await Task.find({});
-	res.json(tasks);
+	res.json(tasks.map(task => task.toJSON()));
 });
 
 app.get('/api/tasks/:id', async (req, res) => {
@@ -78,7 +78,7 @@ app.get('/api/tasks/:id', async (req, res) => {
 		const task = await Task.findById(req.params.id);
 
 		console.log(`get task ${task.id}`);
-		res.json(task);
+		res.json(task.toJSON());
 	} catch(error) {
 		console.log(error);
 		res.status(404).end();
@@ -100,7 +100,7 @@ app.post('/api/tasks', async (req, res) => {
 	console.log(`post task ${task.id}`);
 
 	const taskResponse = await task.save();
-	res.json(taskResponse);
+	res.json(taskResponse.toJSON());
 });
 
 app.put('/api/tasks/:id', async (req, res) => {
