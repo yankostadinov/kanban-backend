@@ -1,0 +1,6 @@
+PUT http://localhost:3001/api/lanes/5e1e0cd168c5a03868c89761
+Content-Type: application/json
+
+{
+	"title": "To Delete"
+}

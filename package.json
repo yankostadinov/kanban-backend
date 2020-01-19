@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:ui": "rm -rf dist && cd ../kanban/ && yarn prod && cp -r dist ../kanban-backend",
+    "build:ui": "rm -rf static && cd ../kanban/ && yarn prod && cp -r dist ../kanban-backend/static",
     "deploy": "git push heroku master",
-    "deploy:full": "yarn build:ui && git add . && git commit -m build-deploy && yarn deploy"
+    "deploy:full": "yarn build:ui && git add . && git commit -m build-deploy && yarn deploy",
+    "start": "nodemon index.js"
   },
   "author": "Yan Kostadinov <yankostadinov@gmail.com>",
   "license": "MIT",
@@ -13,7 +14,9 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.7"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
