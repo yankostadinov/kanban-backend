@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:ui": "rm -rf dist && cd ../kanban/ && yarn prod && cp -r dist ../kanban-backend",
+    "build:ui": "rm -rf static && cd ../kanban/ && yarn prod && cp -r dist ../kanban-backend/static",
     "deploy": "git push heroku master",
     "deploy:full": "yarn build:ui && git add . && git commit -m build-deploy && yarn deploy",
     "start": "nodemon index.js"

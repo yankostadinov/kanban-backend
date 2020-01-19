@@ -8,7 +8,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('dist'));
+app.use(express.static('static'));
 
 app.get('/api/lanes', async (req, res) => {
 	console.log(`get all lanes`);
