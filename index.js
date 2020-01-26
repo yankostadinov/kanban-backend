@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(express.static('static'));
 
 app.get('/api/lanes', async (req, res) => {
-	console.log(`get all lanes`);
+	console.log('get all lanes');
 	const lanes = await Lane.find({});
 	res.json(lanes.map(lane => lane.toJSON()));
 });
@@ -68,7 +68,7 @@ app.delete('/api/lanes/:id', async (req, res) => {
 });
 
 app.get('/api/tasks', async (req, res) => {
-	console.log(`get all tasks`);
+	console.log('get all tasks');
 	const tasks = await Task.find({});
 	res.json(tasks.map(task => task.toJSON()));
 });
@@ -130,5 +130,5 @@ app.delete('/api/tasks/:id', async (req, res) => {
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`)
+	console.log(`Server running on port ${PORT}`);
 });
