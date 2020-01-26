@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
-	subject: String,
-	lane: String,
+	subject: { type: String, required: true },
+	lane: { type: String, required: true },
 	assignee: String,
 	important: Boolean,
 });

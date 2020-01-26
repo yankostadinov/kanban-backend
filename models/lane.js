@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const laneSchema = new mongoose.Schema({
-	title: String,
+	title: { type: String, required: true },
 	order: Number,
 	hidden: Boolean,
 });
- 
+
 laneSchema.set('toJSON', {
 	transform: (_, returnedObject) => {
 		returnedObject.id = returnedObject._id.toString();
